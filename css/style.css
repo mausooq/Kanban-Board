@@ -1,0 +1,20 @@
+.dropzone{
+  height: 10px;
+  transition: background 0.15s,height 0.15s;
+  background-color: red;
+}
+.dropzone--active{
+  height: 20px;
+  background: rgba(0,0,0,0.25);
+}
+
+
+@media (max-width: 768px) {
+    .navbar {
+      padding: 15px 0;
+    }
+    .navbar-brand {
+      font-size: 24px;
+    }
+  }
+  
