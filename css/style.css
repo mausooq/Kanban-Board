@@ -1,20 +1,72 @@
-.dropzone{
-  height: 10px;
-  transition: background 0.15s,height 0.15s;
-  background-color: red;
-}
-.dropzone--active{
-  height: 20px;
-  background: rgba(0,0,0,0.25);
+/* Custom styles for Dark Roast Events Kanban board */
+
+.kanban .card {
+  min-height: 400px;
+  height: 100%;
 }
 
+.dropzone, .dropzone--active {
+  min-height: 250px;
+  padding: 10px 0;
+}
 
-@media (max-width: 768px) {
-    .navbar {
-      padding: 15px 0;
-    }
-    .navbar-brand {
-      font-size: 24px;
-    }
-  }
-  
+.dropzone--active {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 5px;
+}
+
+.task-card {
+  cursor: grab;
+  transition: all 0.2s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.task-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+}
+
+.task-card.dragging {
+  opacity: 0.8;
+  cursor: grabbing;
+  z-index: 100;
+}
+
+/* Dark theme overrides */
+body.bg-dark {
+  color: #f8f9fa;
+}
+
+.card {
+  background-color: #2c2c2c;
+  color: #f8f9fa;
+  border: none;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+[contenteditable] {
+  outline: none;
+  padding: 5px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
+
+[contenteditable]:focus {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.task-card {
+  background-color: #383838 !important;
+  color: #e6e6e6;
+}
+
+/* Add animation for cards */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.task-card {
+  animation: fadeIn 0.3s ease forwards;
+}
