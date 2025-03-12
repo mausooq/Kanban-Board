@@ -111,66 +111,77 @@ class Kanban {
     showAddTaskModal(columnIndex) {
       const statuses = ['to-do', 'in-progress', 'completed'];
       const modalHTML = `
-        <div class="modal fade" id="addTaskModal" tabindex="-1" aria-labelledby="addTaskModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title text-muted" id="addTaskModalLabel">Add New Event</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <form id="taskForm">
-                  <div class="mb-3">
-                    <label for="taskTitle" class="form-label">Event Title</label>
-                    <input type="text" class="form-control" id="taskTitle" placeholder="Add Task" required>
-                  </div>
-                  <div class="mb-3">
-                    <label for="taskDescription" class="form-label">Description</label>
-                    <textarea class="form-control" id="taskDescription" rows="3" placeholder="Add Description" ></textarea>
-                  </div>
-                  <div class="mb-3">
-                    <label for="taskDate" class="form-label">Date</label>
-                    <input type="date" class="form-control" id="taskDate">
-                  </div>
-                  <input type="hidden" id="taskStatus" value="${statuses[columnIndex]}">
-                </form>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" id="saveTaskBtn">Save Task</button>
+          <div class="modal fade" id="addTaskModal" tabindex="-1" aria-labelledby="addTaskModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title text-muted" id="addTaskModalLabel">Add New Event</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form id="taskForm">
+                    <div class="mb-3">
+                      <label for="taskTitle" class="form-label">Event Title</label>
+                      <input type="text" class="form-control" id="taskTitle" placeholder="Add Task" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="taskDescription" class="form-label">Description</label>
+                      <textarea class="form-control" id="taskDescription" rows="3" placeholder="Add Description"></textarea>
+                    </div>
+                    <div class="mb-3">
+                      <label for="taskDate" class="form-label">Date</label>
+                      <input type="date" class="form-control" id="taskDate">
+                    </div>
+                    <input type="hidden" id="taskStatus" value="${statuses[columnIndex]}">
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                  <button type="button" class="btn btn-primary" id="saveTaskBtn">Save Task</button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
       `;
   
       if (!document.getElementById('addTaskModal')) {
-        const modalContainer = document.createElement('div');
-        modalContainer.innerHTML = modalHTML;
-        document.body.appendChild(modalContainer);
+          const modalContainer = document.createElement('div');
+          modalContainer.innerHTML = modalHTML;
+          document.body.appendChild(modalContainer);
       }
   
       const modal = new bootstrap.Modal(document.getElementById('addTaskModal'));
       modal.show();
   
       document.getElementById('saveTaskBtn').addEventListener('click', () => {
-        const title = document.getElementById('taskTitle').value;
-        if (!title) return;
-        
-        const task = {
-          id: Date.now().toString(),
-          title: title,
-          description: document.getElementById('taskDescription').value,
-          date: document.getElementById('taskDate').value,
-          status: document.getElementById('taskStatus').value
-        };
+          const titleInput = document.getElementById('taskTitle');
+          const descriptionInput = document.getElementById('taskDescription');
+          const dateInput = document.getElementById('taskDate');
   
-        this.tasks.push(task);
-        this.createTaskCard(task);
-        this.saveTasks();
-        modal.hide();
+          const title = titleInput.value.trim();
+          if (!title) return; 
+  
+          const task = {
+              id: Date.now().toString(),
+              title: title,
+              description: descriptionInput.value.trim(),
+              date: dateInput.value,
+              status: document.getElementById('taskStatus').value
+          };
+  
+          this.tasks.push(task);
+          this.createTaskCard(task);
+          this.saveTasks();
+  
+         
+          titleInput.value = "";
+          descriptionInput.value = "";
+          dateInput.value = "";
+  
+          modal.hide();
       });
-    }
+  }
+  
   
   
     editTask(taskId) {
