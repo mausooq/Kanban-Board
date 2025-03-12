@@ -1,4 +1,3 @@
-// Kanban class for managing the Kanban board
 class Kanban {
     constructor() {
       this.tasks = JSON.parse(localStorage.getItem('kanbanTasks')) || [];
@@ -6,27 +5,24 @@ class Kanban {
       this.bindEvents();
     }
   
-    // Initialize the board with existing tasks or empty state
     loadTasks() {
-      // Clear existing tasks in dropzones
       document.querySelectorAll('.dropzone, .dropzone--active').forEach(zone => {
         zone.innerHTML = '';
       });
   
-      // Add saved tasks to their respective columns
+     
       this.tasks.forEach(task => {
         this.createTaskCard(task);
       });
     }
   
-    // Create HTML for a task card
+
     createTaskCard(task) {
       const taskCard = document.createElement('div');
       taskCard.classList.add('task-card', 'mb-2', 'p-2', 'bg-light', 'rounded', 'shadow-sm');
       taskCard.setAttribute('draggable', 'true');
       taskCard.dataset.id = task.id;
       
-      // Different colored borders based on status
       const statusColors = {
         'to-do': 'border-primary',
         'in-progress': 'border-success',
@@ -47,22 +43,19 @@ class Kanban {
         ${task.date ? `<small class="text-muted"><i class="fa-solid fa-calendar-day me-1"></i>${task.date}</small>` : ''}
       `;
   
-      // Add the task to the appropriate column
       const column = task.status === 'to-do' ? 0 : 
                     task.status === 'in-progress' ? 1 : 2;
       
       const dropzones = document.querySelectorAll('.dropzone, .dropzone--active');
       dropzones[column].appendChild(taskCard);
       
-      // Add event listeners for drag and drop
       this.addDragEvents(taskCard);
       
-      // Add event listeners for editing and deleting
+    
       taskCard.querySelector('.edit-task').addEventListener('click', () => this.editTask(task.id));
       taskCard.querySelector('.delete-task').addEventListener('click', () => this.deleteTask(task.id));
     }
   
-    // Bind all event listeners
     bindEvents() {
       // Add new task buttons
       const addButtons = document.querySelectorAll('.btn-outline-primary, .btn-outline-success, .btn-outline-danger');
@@ -100,7 +93,6 @@ class Kanban {
       });
     }
   
-    // Helper function to determine where to place dragged element
     getDragAfterElement(container, y) {
       const draggableElements = [...container.querySelectorAll('.task-card:not(.dragging)')];
   
@@ -116,7 +108,6 @@ class Kanban {
       }, { offset: Number.NEGATIVE_INFINITY }).element;
     }
   
-    // Show modal for adding a new task
     showAddTaskModal(columnIndex) {
       const statuses = ['to-do', 'in-progress', 'completed'];
       const modalHTML = `
@@ -153,21 +144,18 @@ class Kanban {
         </div>
       `;
   
-      // Add modal to document if it doesn't exist
       if (!document.getElementById('addTaskModal')) {
         const modalContainer = document.createElement('div');
         modalContainer.innerHTML = modalHTML;
         document.body.appendChild(modalContainer);
       }
   
-      // Set up the modal
       const modal = new bootstrap.Modal(document.getElementById('addTaskModal'));
       modal.show();
   
-      // Event listener for save button
       document.getElementById('saveTaskBtn').addEventListener('click', () => {
         const title = document.getElementById('taskTitle').value;
-        if (!title) return; // Don't save without a title
+        if (!title) return;
         
         const task = {
           id: Date.now().toString(),
@@ -184,12 +172,11 @@ class Kanban {
       });
     }
   
-    // Edit an existing task
+  
     editTask(taskId) {
       const task = this.tasks.find(t => t.id === taskId);
       if (!task) return;
   
-      // Create edit modal
       const modalHTML = `
         <div class="modal fade" id="editTaskModal" tabindex="-1" aria-labelledby="editTaskModalLabel" aria-hidden="true">
           <div class="modal-dialog">
@@ -224,7 +211,6 @@ class Kanban {
         </div>
       `;
   
-      // Add modal to document if it doesn't exist
       if (!document.getElementById('editTaskModal')) {
         const modalContainer = document.createElement('div');
         modalContainer.innerHTML = modalHTML;
@@ -233,17 +219,16 @@ class Kanban {
         document.getElementById('editTaskModal').outerHTML = modalHTML;
       }
   
-      // Set up the modal
+
       const modal = new bootstrap.Modal(document.getElementById('editTaskModal'));
       modal.show();
-  
-      // Event listener for update button
+
       document.getElementById('updateTaskBtn').addEventListener('click', () => {
         const taskIndex = this.tasks.findIndex(t => t.id === task.id);
         if (taskIndex === -1) return;
         
         const title = document.getElementById('editTaskTitle').value;
-        if (!title) return; // Don't update without a title
+        if (!title) return; 
         
         this.tasks[taskIndex] = {
           ...task,
@@ -253,27 +238,26 @@ class Kanban {
         };
   
         this.saveTasks();
-        this.loadTasks(); // Refresh all tasks
+        this.loadTasks(); 
         modal.hide();
       });
     }
-  
-    // Delete a task
+
     deleteTask(taskId) {
       if (confirm('Are you sure you want to delete this task?')) {
         this.tasks = this.tasks.filter(task => task.id !== taskId);
         this.saveTasks();
-        this.loadTasks(); // Refresh all tasks
+        this.loadTasks(); 
       }
     }
   
-    // Update task status based on its column
+  
     updateTaskStatus(taskCard) {
       const taskId = taskCard.dataset.id;
       const task = this.tasks.find(t => t.id === taskId);
       if (!task) return;
   
-      // Determine which column the task is in
+   
       const dropzones = document.querySelectorAll('.dropzone, .dropzone--active');
       let newStatus = 'to-do';
       
@@ -283,11 +267,11 @@ class Kanban {
         }
       });
   
-      // Update task status and save
+
       task.status = newStatus;
       this.saveTasks();
       
-      // Update card styling
+
       taskCard.classList.remove('border-primary', 'border-success', 'border-danger');
       const statusColors = {
         'to-do': 'border-primary',
@@ -297,13 +281,13 @@ class Kanban {
       taskCard.classList.add(statusColors[newStatus]);
     }
   
-    // Save tasks to localStorage
+
     saveTasks() {
       localStorage.setItem('kanbanTasks', JSON.stringify(this.tasks));
     }
   }
   
-  // Initialize the app when the DOM is loaded
+
   document.addEventListener('DOMContentLoaded', () => {
     new Kanban();
   });

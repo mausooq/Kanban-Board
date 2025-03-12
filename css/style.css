@@ -1,4 +1,3 @@
-/* Custom styles for Dark Roast Events Kanban board */
 
 .kanban .card {
   min-height: 400px;
@@ -33,7 +32,7 @@
   z-index: 100;
 }
 
-/* Dark theme overrides */
+
 body.bg-dark {
   color: #f8f9fa;
 }
@@ -45,23 +44,12 @@ body.bg-dark {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
-[contenteditable] {
-  outline: none;
-  padding: 5px;
-  margin-bottom: 10px;
-  border-radius: 4px;
-}
-
-[contenteditable]:focus {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
 .task-card {
   background-color: #383838 !important;
   color: #e6e6e6;
 }
 
-/* Add animation for cards */
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
