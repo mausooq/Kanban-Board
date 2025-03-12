@@ -121,15 +121,15 @@ class Kanban {
                 <div class="modal-body">
                   <form id="taskForm">
                     <div class="mb-3">
-                      <label for="taskTitle" class="form-label">Event Title</label>
+                      <label for="taskTitle" class="form-label text-muted">Event Title</label>
                       <input type="text" class="form-control" id="taskTitle" placeholder="Add Task" required>
                     </div>
                     <div class="mb-3">
-                      <label for="taskDescription" class="form-label">Description</label>
+                      <label for="taskDescription" class="form-label text-muted">Description</label>
                       <textarea class="form-control" id="taskDescription" rows="3" placeholder="Add Description"></textarea>
                     </div>
                     <div class="mb-3">
-                      <label for="taskDate" class="form-label">Date</label>
+                      <label for="taskDate" class="form-label text-muted">Date</label>
                       <input type="date" class="form-control" id="taskDate">
                     </div>
                     <input type="hidden" id="taskStatus" value="${statuses[columnIndex]}">
@@ -199,15 +199,15 @@ class Kanban {
               <div class="modal-body">
                 <form id="editTaskForm">
                   <div class="mb-3">
-                    <label for="editTaskTitle" class="form-label">Event Title</label>
+                    <label for="editTaskTitle" class="form-label text-muted">Event Title</label>
                     <input type="text" class="form-control" id="editTaskTitle" placeholder="Edit Title" value="${task.title}" required>
                   </div>
                   <div class="mb-3">
-                    <label for="editTaskDescription" class="form-label">Description</label>
+                    <label for="editTaskDescription" class="form-label text-muted">Description</label>
                     <textarea class="form-control" id="editTaskDescription" placeholder="Edit Description" rows="3">${task.description || ''}</textarea>
                   </div>
                   <div class="mb-3">
-                    <label for="editTaskDate" class="form-label">Date</label>
+                    <label for="editTaskDate" class="form-label text-muted">Date</label>
                     <input type="date" class="form-control" id="editTaskDate" value="${task.date || ''}">
                   </div>
                   <input type="hidden" id="editTaskId" value="${task.id}">

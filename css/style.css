@@ -48,6 +48,11 @@ body.bg-dark {
   background-color: #383838 !important;
   color: #e6e6e6;
 }
+.prevent-select {
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}
 
 
 @keyframes fadeIn {
